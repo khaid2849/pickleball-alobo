@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add the Alobo court-search button to session form + list -->
+    <record id="view_pickleball_session_form_alobo" model="ir.ui.view">
+        <field name="name">pickleball.session.form.alobo</field>
+        <field name="model">pickleball.session</field>
+        <field name="inherit_id" ref="pickleball-team.view_pickleball_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_open_court_search"
+                        string="Search Available Courts"
+                        type="object"
+                        class="btn-secondary"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pickleball_session_list_alobo" model="ir.ui.view">
+        <field name="name">pickleball.session.list.alobo</field>
+        <field name="model">pickleball.session</field>
+        <field name="inherit_id" ref="pickleball-team.view_pickleball_session_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <header>
+                    <button name="action_open_court_search"
+                            type="object"
+                            string="Search Available Courts"
+                            class="btn-secondary"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+</odoo>

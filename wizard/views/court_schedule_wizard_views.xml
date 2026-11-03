@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Court Schedule Wizard Form View -->
+    <record id="view_pickleball_court_schedule_wizard_form" model="ir.ui.view">
+        <field name="name">pickleball.court.schedule.form</field>
+        <field name="model">pickleball.court.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Court Booking Schedule">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Court Booking Schedule</h1>
+                        <p class="text-muted">
+                            View the full booking schedule for a specific court on a given date.
+                        </p>
+                    </div>
+
+                    <!-- ── Search Inputs ── -->
+                    <group string="Lookup">
+                        <group>
+                            <field name="court_id"
+                                   options="{'no_create': True, 'no_open': True}"
+                                   placeholder="Select a court with Alobo integration…"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                        </group>
+                    </group>
+
+                    <!-- Hidden state -->
+                    <field name="state" invisible="1"/>
+
+                    <!-- ── Results — shown after search ── -->
+                    <div invisible="state == 'search'">
+
+                        <!-- Summary banner: bookings found -->
+                        <div class="alert alert-info mb-3" invisible="total_slots == 0">
+                            <i class="fa fa-calendar-check-o me-1"/>
+                            <strong>
+                                <field name="total_slots" nolabel="1" readonly="1"/>
+                                booking(s) found
+                            </strong>
+                            for this date — showing confirmed booked slots below.
+                        </div>
+
+                        <!-- Summary banner: no bookings -->
+                        <div class="alert alert-success mb-3" invisible="total_slots != 0">
+                            <i class="fa fa-check-circle me-1"/>
+                            <strong>No bookings found for this date.</strong>
+                            The court has no confirmed bookings — it may be available to book.
+                        </div>
+
+                        <!-- ── Slot List ── -->
+                        <field name="slot_ids" string="Booking Slots" nolabel="1" readonly="1">
+                            <list string="Slots"
+                                  decoration-success="status == 'available'"
+                                  decoration-muted="status == 'booked'"
+                                  default_order="time_start asc, yard_name asc">
+                                <field name="time_start" string="From" optional="show"/>
+                                <field name="time_end" string="To" optional="show"/>
+                                <field name="yard_name" string="Court" optional="show"/>
+                                <field name="status" string="Status" optional="show"/>
+                                <field name="price" string="Price (VND)" optional="show"/>
+                            </list>
+                        </field>
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="action_search" type="object" string="View Schedule"
+                            class="btn btn-primary" icon="fa-calendar"/>
+                    <button name="action_new_search" type="object" string="New Lookup"
+                            class="btn btn-secondary ms-2"
+                            invisible="state == 'search'"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Court Schedule Wizard Action -->
+    <record id="action_pickleball_court_schedule" model="ir.actions.act_window">
+        <field name="name">Court Schedule</field>
+        <field name="res_model">pickleball.court.schedule</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_pickleball_court_schedule_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

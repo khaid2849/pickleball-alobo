@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pickleball_court_search_user,pickleball.court.search.user,model_pickleball_court_search,base.group_user,1,1,1,1
+access_pickleball_court_search_result_user,pickleball.court.search.result.user,model_pickleball_court_search_result,base.group_user,1,1,1,1
+access_pickleball_court_schedule_user,pickleball.court.schedule.user,model_pickleball_court_schedule,base.group_user,1,1,1,1
+access_pickleball_court_schedule_slot_user,pickleball.court.schedule.slot.user,model_pickleball_court_schedule_slot,base.group_user,1,1,1,1

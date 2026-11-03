@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Alobo-backed bot commands, added to the catalog when alobo_connector
+         is installed. Codes match the _cmd_<code> handlers in
+         models/pickleball_ai_commands.py. -->
+    <record id="bot_command_findcourt" model="pickleball.bot.command">
+        <field name="code">findcourt</field>
+        <field name="name">Tìm sân trống</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="bot_command_court" model="pickleball.bot.command">
+        <field name="code">court</field>
+        <field name="name">Thông tin sân</field>
+        <field name="sequence">11</field>
+    </record>
+    <record id="bot_command_courtplan" model="pickleball.bot.command">
+        <field name="code">courtplan</field>
+        <field name="name">Lịch đặt sân trong ngày</field>
+        <field name="sequence">12</field>
+    </record>
+    <record id="bot_command_getbooking" model="pickleball.bot.command">
+        <field name="code">getbooking</field>
+        <field name="name">Tạo buổi chơi từ lịch đặt Alobo</field>
+        <field name="sequence">13</field>
+    </record>
+</odoo>

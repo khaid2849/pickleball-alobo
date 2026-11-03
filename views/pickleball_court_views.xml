@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add the Alobo-synced data to pickleball.court views -->
+    <record id="view_pickleball_court_form_alobo" model="ir.ui.view">
+        <field name="name">pickleball.court.form.alobo</field>
+        <field name="model">pickleball.court</field>
+        <field name="inherit_id" ref="pickleball-team.view_pickleball_court_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[field[@name='active']]" position="inside">
+                <field name="morning_open"/>
+                <field name="evening_close"/>
+            </xpath>
+            <xpath expr="//field[@name='notes']/ancestor::group[1]" position="after">
+                <group string="Alobo Data" invisible="not alobo_branch_id">
+                    <group>
+                        <field name="alobo_branch_id"/>
+                        <field name="total_star"/>
+                        <field name="total_rating"/>
+                        <field name="last_alobo_sync"/>
+                    </group>
+                    <group>
+                        <field name="province_code"/>
+                        <field name="ward_code"/>
+                        <field name="latitude"/>
+                        <field name="longitude"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pickleball_court_list_alobo" model="ir.ui.view">
+        <field name="name">pickleball.court.list.alobo</field>
+        <field name="model">pickleball.court</field>
+        <field name="inherit_id" ref="pickleball-team.view_pickleball_court_list"/>
+        <field name="arch" type="xml">
+            <field name="session_count" position="before">
+                <field name="total_star" optional="show"/>
+                <field name="total_rating" optional="show"/>
+                <field name="last_alobo_sync" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_pickleball_court_search_alobo" model="ir.ui.view">
+        <field name="name">pickleball.court.search.alobo</field>
+        <field name="model">pickleball.court</field>
+        <field name="inherit_id" ref="pickleball-team.view_pickleball_court_search"/>
+        <field name="arch" type="xml">
+            <field name="address" position="after">
+                <field name="province_code" string="Province"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Manual "Sync Alobo Courts" button via a server action in the Courts list -->
+    <record id="action_sync_alobo_courts" model="ir.actions.server">
+        <field name="name">Sync Alobo Courts</field>
+        <field name="model_id" ref="pickleball-team.model_pickleball_court"/>
+        <field name="binding_model_id" ref="pickleball-team.model_pickleball_court"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">model.action_sync_alobo_courts()</field>
+    </record>
+
+    <!-- Court lookup menus (parent lives in pickleball-team) -->
+    <menuitem id="menu_pickleball_court_search"
+              name="Find Available Courts"
+              parent="pickleball-team.menu_pickleball_court_data"
+              action="action_pickleball_court_search"
+              sequence="5"/>
+    <menuitem id="menu_pickleball_court_schedule"
+              name="Court Schedule"
+              parent="pickleball-team.menu_pickleball_court_data"
+              action="action_pickleball_court_schedule"
+              sequence="10"/>
+</odoo>
